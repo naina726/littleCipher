@@ -17,7 +17,15 @@ var encodeMe = function(inputString){
 			var stringBitShift = temp.substr(wraparoundOffset) + temp.substr(0, wraparoundOffset); //mimic bit shift with wrap around
 			var convTemp = String.fromCharCode(parseInt(stringBitShift,2).toString(10));
 			res += convTemp; //parse to binary int, convert to decimal, convert to ascii char, push to array
-		} 
+		}
+		else if (inputString[i] === " "){
+			res += " ";
+		}
+		/*
+		else if ((eachChar>=33 && eachChar<=47) || (eachChar>=58 && eachChar<=64) || (eachChar>=91 && eachChar<=96) || (eachChar>=123 && eachChar<=126)){
+			res += inputString[i];
+		}
+		*/
 		else{
 			var temp = eachChar.toString(2);
 			//console.log(temp)
@@ -36,8 +44,8 @@ var decodeMe = function(inputString){
 	var finalResult = "";
 
 	for (var i=0; i<resultArray.length; i++){
-		var eachChar = inputString.charCodeAt(i); //ascii char as decimal
-		eachChar = parseInt(eachChar,10).toString(2); //eachChar is string
+		var firstConversion = inputString.charCodeAt(i); //ascii char as decimal
+		var eachChar = parseInt(firstConversion,10).toString(2); //eachChar is string
 		var newOffset = eachChar.length - wraparoundOffset;
 		var reverseShift = eachChar.substr(newOffset) + eachChar.substr(0, newOffset); //descrambled binary string
 		eachChar = parseInt(reverseShift,2).toString(10);
@@ -47,29 +55,15 @@ var decodeMe = function(inputString){
 			finalConversion = String.fromCharCode(finalConversion);
 			finalResult += finalConversion;
 		}
+		else if (resultArray[i] === " "){
+			finalResult += " ";
+		}/*
+		else if ((eachChar>=33 && eachChar<=47) || (eachChar>=58 && eachChar<=64) || (eachChar>=91 && eachChar<=96) || (eachChar>=123 && eachChar<=126)){
+			finalResult += resultArray[i];
+		}*/
 		else{
 			finalResult += String.fromCharCode(eachChar);
 		}
 	}
 	console.log(finalResult)
 }
-/*
-
-offset = 2
-10 01001
-01001 + 10
-
-
-01001 10
-need to split on len-offset
-
-
-
-nainaprasad
-inaprasad + na
-
-
-
-
-
-*/
